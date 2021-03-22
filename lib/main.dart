@@ -14,7 +14,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (ctx) => ProductsProvider(),
+      create: (_) => ProductsProvider(),
+      // value:ProductsProvider(),
       child: MaterialApp(
         title: 'MyShop',
         theme: ThemeData(
@@ -30,3 +31,8 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+// .value vs create
+// .value is better with builder methods and reuses a provider, cause it updates the state correctly
+// Whenever you instanciate a class you should use a create method for eficiency
+// When we replace a screen is important to clean the provider Data, the ChangeNotifierProvider cleans the Data automaticly

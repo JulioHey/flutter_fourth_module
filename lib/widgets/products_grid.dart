@@ -14,13 +14,13 @@ class ProductsGrid extends StatelessWidget {
     return GridView.builder(
       padding: const EdgeInsets.all(10),
       itemBuilder: (ctx, index) {
-        return ChangeNotifierProvider(
-          create: (ctx) => products[index],
+        return ChangeNotifierProvider.value(
+          value: products[index],
           child: ProductItem(
             // products[index].imageUrl,
             // products[index].title,
             // products[index].id,
-          )
+          ),
         );
       },
       itemCount: products.length,
