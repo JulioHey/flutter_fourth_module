@@ -18,8 +18,10 @@ class ProductItem extends StatelessWidget {
   
   @override
   Widget build (BuildContext context) {
-    final product = Provider.of<Product>(context);
+    final product = Provider.of<Product>(context, listen: false);
     
+    print("Products rebuild");
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: GridTile(
@@ -34,19 +36,23 @@ class ProductItem extends StatelessWidget {
               arguments: product.id
             );
           }
-         ),
+        ),
         footer: GridTileBar(
           backgroundColor: Colors.black87,
           title: Text(
             product.title,
             textAlign: TextAlign.center,
           ),
-          leading: IconButton(
-            icon: Icon(
-              product.isFavorite ? Icons.favorite : Icons.favorite_border
-            ),
-            onPressed: product.toggleFavoriteStatus,
-            color: Theme.of(context).accentColor,
+          leading: Consumer<Product>(
+            builder: (ctx, product, _) {
+              return IconButton(
+                icon: Icon(
+                  product.isFavorite ? Icons.favorite : Icons.favorite_border
+                ),
+                onPressed: product.toggleFavoriteStatus,
+                color: Theme.of(context).accentColor,
+              );
+            },
           ),
           trailing: IconButton(
             icon: Icon(Icons.shopping_cart),
@@ -58,3 +64,7 @@ class ProductItem extends StatelessWidget {
     );
   }
 }
+
+// Consumer vs Provider
+// Provider will rerun whenever the data changes
+// When you only want to change a sub part of the widget you can use a consumer to just observe this part of the widget
