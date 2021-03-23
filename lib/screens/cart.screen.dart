@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../widgets/cart_item.dart';
 import '../providers/cart.provider.dart' show CartProvider;
+import '../providers/orders.provider.dart';
 
 class CartScreen extends StatelessWidget {
   static const routeName = '/cart';
@@ -47,7 +48,13 @@ class CartScreen extends StatelessWidget {
                         color: Theme.of(context).primaryColor,
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Provider.of<OrdersProvider>(context, listen: false).addOrder(
+                        cart.items.values.toList(), 
+                        cart.totalAmount
+                      );
+                      cart.clear();
+                    },
                   ),
                 ]
               )
@@ -73,3 +80,5 @@ class CartScreen extends StatelessWidget {
     );
   }
 }
+
+// For to call a listener inside a onPressed function you need to use listen: false
