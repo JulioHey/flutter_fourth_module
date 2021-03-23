@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import './screens/products_overview.screen.dart';
 import './screens/product_detail.screen.dart';
+import './screens/cart.screen.dart';
 
 import './providers/products.provider.dart';
 import './providers/cart.provider.dart';
@@ -27,13 +28,14 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'MyShop',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.purple,
           accentColor: Colors.deepOrange,
           fontFamily: 'Lato',
         ),
         home: ProductsOverviewScreen(),
         routes: {
           ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
+          CartScreen.routeName: (ctx) => CartScreen(),
         }
       )
     );
