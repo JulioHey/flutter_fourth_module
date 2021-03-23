@@ -12,6 +12,13 @@ class _EditProductState extends State<EditProductScreen> {
   final _descriptionFocusNode = FocusNode();
   
   @override
+  void dispose() {
+    _priceFocusNode.dispose();
+    _descriptionFocusNode.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build (BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -53,6 +60,8 @@ class _EditProductState extends State<EditProductScreen> {
                 maxLines: 3,
                 keyboardType: TextInputType.multiline,
                 focusNode: _descriptionFocusNode,
+                onFieldSubmitted: (_) {
+                },
               ),
             ]
           ),
