@@ -15,7 +15,7 @@ class CartItem {
 }
 
 class CartProvider with ChangeNotifier {
-  Map<String, CartItem> _items;
+  Map<String, CartItem> _items = {};
 
   Map<String, CartItem> get items {
     return {...items};
@@ -47,5 +47,10 @@ class CartProvider with ChangeNotifier {
         )
       );
     }
+    notifyListeners();
   }
+
+  int get itemCount {
+    return  _items.length;
+  } 
 }

@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../widgets/products_grid.dart';
+import '../widgets/badge.dart';
 
-import '../providers/products.provider.dart';
+import '../providers/cart.provider.dart';
 
 enum FilterOptions {
   Favorites,
@@ -20,9 +21,6 @@ class _ProductOverviewScreenState extends State<ProductsOverviewScreen>{
   
   @override
   Widget build (BuildContext context) {
-    final productsData = Provider.of<ProductsProvider>(context, listen: false);
-    
-    
     return Scaffold(
       appBar: AppBar(
         title: Text('Products Overview'),
@@ -53,6 +51,21 @@ class _ProductOverviewScreenState extends State<ProductsOverviewScreen>{
               ];
             }
           ),
+          Consumer<CartProvider>(
+            builder: (_, cart, child) {
+              return Badge(
+                child: child,
+                value: cart.itemCount.toString(),
+              );
+            },
+            child: IconButton(
+              icon: Icon(
+                Icons.shopping_cart
+              ),
+              onPressed: () {
+              },
+            ),
+          )
         ]
       ),
       body: ProductsGrid(_showOnlyFavorites),
