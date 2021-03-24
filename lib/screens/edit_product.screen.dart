@@ -46,11 +46,16 @@ class _EditProductState extends State<EditProductScreen> {
   }
 
   void _saveForm() {
-    _form.currentState.save();
-    print(_editedProduct.title);
-    print(_editedProduct.price);
-    print(_editedProduct.description);
-    print(_editedProduct.imageUrl);
+    final isValid = _form.currentState.validate();
+    
+    if (!isValid) {
+      return;
+    }
+      _form.currentState.save();
+    // print(_editedProduct.title);
+    // print(_editedProduct.price);
+    // print(_editedProduct.description);
+    // print(_editedProduct.imageUrl);
   }
 
   @override
@@ -91,6 +96,12 @@ class _EditProductState extends State<EditProductScreen> {
                     imageUrl:  _editedProduct.imageUrl,
                     price:  _editedProduct.price,
                   );
+                },
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please provide a value.';
+                  }
+                  return null;
                 }
               ),
               TextFormField(
