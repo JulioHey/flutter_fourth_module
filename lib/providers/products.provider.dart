@@ -47,8 +47,16 @@ class ProductsProvider with ChangeNotifier {
     // }
   }
 
-  void addProduct(Product value) {
-    // _items.add(value);
+  void addProduct(Product product) {
+   final newProduct = Product(
+     title: product.title,
+     description: product.description,
+     imageUrl: product.imageUrl,
+     price: product.price,
+     id: DateTime.now().toString(),
+   );
+
+   _items.add(newProduct);
     notifyListeners();
   }
 
@@ -70,4 +78,14 @@ class ProductsProvider with ChangeNotifier {
     return _items.firstWhere((product) => product.id == id);
   }
 
+  void updateProduct(String id, Product newProduct) {
+    final prodIndex = _items.indexWhere((prod) => prod.id == id);
+
+    if(prodIndex >= 0) {
+      _items[prodIndex] = newProduct;
+      notifyListeners();
+    } else {
+      print('ERROU!');
+    }
+  }
 }
