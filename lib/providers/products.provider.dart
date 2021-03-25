@@ -138,7 +138,7 @@ class ProductsProvider with ChangeNotifier {
     var existingProduct;
 
     try {
-      final url = Uri.https('flutter-shop-app-d8fdf-default-rtdb.firebaseio.com', '/products/$id');
+      final url = Uri.https('flutter-shop-app-d8fdf-default-rtdb.firebaseio.com', '/products/$id.json');
 
       existingIndex = _items.indexWhere((prod) => prod.id == id);
       existingProduct = _items[existingIndex];
