@@ -49,24 +49,26 @@ class ProductsProvider with ChangeNotifier {
     // }
   }
 
-  Future<void> addProduct(Product product) {
-   var url = Uri.https('flutter-shop-app-d8fdf-default-rtdb.firebaseio.com', '/products.json');
+  Future<void> addProduct(Product product) async {
+   var url = Uri.https('flutter-shop-app-d8fdf-default-rtdb.firebaseio.com', '/products');
 
-   return http.post(
-    url,
-    body: json.encode({
-      'title': product.title,
-      'description': product.description,
-      'imageUrl': product.imageUrl,
-      'price': product.price,
-      'isFavorite': product.isFavorite,
-    },),
-    headers: {
-      "Accept": "application/json",
-      "Tokenvalue": "sOzz0Y6O",
-      "Content-Type": "application/json"
-  })
-  .then((response) {
+  try {
+    final response = await http.post(
+      url,
+      body: json.encode({
+        'title': product.title,
+        'description': product.description,
+        'imageUrl': product.imageUrl,
+        'price': product.price,
+        'isFavorite': product.isFavorite,
+      },),
+      headers: {
+        "Accept": "application/json",
+        "Tokenvalue": "sOzz0Y6O",
+        "Content-Type": "application/json"
+      }
+    );
+
     final newProduct = Product(
       title: product.title,
       description: product.description,
@@ -77,11 +79,12 @@ class ProductsProvider with ChangeNotifier {
 
     _items.add(newProduct);
       notifyListeners();
-   })
-    .catchError((error) {
-      throw error;
-    });
+  } catch(error) {
+    print("error");
+    throw error;
   }
+
+}
 
   // void showFavoritesOnly() {
   //   _showFavoritesOnly = true;

@@ -83,7 +83,7 @@ class _EditProductState extends State<EditProductScreen> {
     }
   }
 
-  void _saveForm() {
+  Future<void> _saveForm() async {
     final isValid = _form.currentState.validate();
     
     if (!isValid) {
@@ -107,37 +107,36 @@ class _EditProductState extends State<EditProductScreen> {
 
       Navigator.of(context).pop();
     } else {
-      Provider.of<ProductsProvider>
-        (context, listen: false)
-        .addProduct(_editedProduct)
-        .catchError((error) {
-          return showDialog<Null>(
-            context: context,
-            builder: (ctx) {
-              return AlertDialog(
-                title: const Text('An error has ocurred'),
-                content: Text("DAle"),
-                actions: <Widget>[
-                  TextButton(
-                    child: const Text('Okay'),
-                    onPressed: () {
-                      Navigator.of(ctx).pop();
-                    }
-                  ),
-                ]
-              );
-            }
-          );
-        })
-        .then((_) {
-          print('DALE');
-          setState(() {
-            _isLoading = false;
-          });
-
-          Navigator.of(context).pop();
+      try {
+        await Provider.of<ProductsProvider>
+          (context, listen: false)
+          .addProduct(_editedProduct);
+      } catch(error) {
+        await showDialog(
+          context: context,
+          builder: (ctx) {
+            return AlertDialog(
+              title: const Text('An error has ocurred'),
+              content: Text("DAle"),
+              actions: <Widget>[
+                TextButton(
+                  child: const Text('Okay'),
+                  onPressed: () {
+                    Navigator.of(ctx).pop();
+                  }
+                ),
+              ]
+            );
+          }
+        );
+      } finally {
+        setState(() {
+          _isLoading = false;
         });
-    }
+
+        Navigator.of(context).pop();
+      }
+    } 
   }
 
   @override
