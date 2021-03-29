@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 
+import '../models/http_exception.dart';
+
 class AuthProvider extends ChangeNotifier {
   String _token;
   DateTime _expiryDate;
@@ -22,6 +24,7 @@ class AuthProvider extends ChangeNotifier {
         'Content-Type': 'application/json;charset=UTF-8',
         'Charset': 'utf-8'
     };
+
     try {
       final response = await http.post(
         url,
@@ -33,10 +36,16 @@ class AuthProvider extends ChangeNotifier {
           },
         ),
         headers: headers,
-      );
-      print(json.decode(response.body));
+      ).timeout(Duration(seconds: 3));
+
+      final responseData = json.decode(response.body);
+
+      if (responseData['error'] != null) {
+        throw HttpException(responseData['error']['message']);
+      }
+
     } catch(error) {
-      print(error);
+      throw error;
     }
   }
 
