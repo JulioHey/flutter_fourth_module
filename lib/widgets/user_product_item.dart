@@ -56,7 +56,6 @@ class UserProductItem extends StatelessWidget {
                     )
                   );
                 }
-;
               },
               color: Theme.of(context).errorColor,
             ),

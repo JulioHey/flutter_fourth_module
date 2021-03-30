@@ -43,7 +43,6 @@ class AuthProvider with ChangeNotifier {
         throw HttpException(responseData['error']['message']);
       }
       _token = responseData['idToken'];
-      print(_token);
       _userId = responseData['localId'];
       _expiryDate = DateTime.now().add(
         Duration(

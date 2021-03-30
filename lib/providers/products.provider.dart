@@ -306,7 +306,8 @@ class ProductsProvider with ChangeNotifier {
   }
 
   Future<void> addProduct(Product product) async {
-    final url = Uri.https('flutter-shop-app-d8fdf-default-rtdb.firebaseio.com', '/products.json?auth=$authToken');
+    final url = Uri.parse('https://flutter-shop-app-d8fdf-default-rtdb.firebaseio.com/products.json?auth=$authToken');
+
     try {
       final response = await http.post(
         url,
@@ -337,7 +338,8 @@ class ProductsProvider with ChangeNotifier {
   Future<void> updateProduct(String id, Product newProduct) async {
     final prodIndex = _items.indexWhere((prod) => prod.id == id);
     if (prodIndex >= 0) {
-      final url = Uri.https('flutter-shop-app-d8fdf-default-rtdb.firebaseio.com', '/products/$id.json?auth=$authToken');
+      final url = Uri.parse('https://flutter-shop-app-d8fdf-default-rtdb.firebaseio.com/products$id.json?auth=$authToken');
+      
       await http.patch(url,
           body: json.encode({
             'title': newProduct.title,
@@ -353,7 +355,7 @@ class ProductsProvider with ChangeNotifier {
   }
 
   Future<void> deleteProduct(String id) async {
-    final url = Uri.https('flutter-shop-app-d8fdf-default-rtdb.firebaseio.com', '/products/$id.json?auth=$authToken');
+      final url = Uri.parse('https://flutter-shop-app-d8fdf-default-rtdb.firebaseio.com/products$id.json?auth=$authToken');
     final existingProductIndex = _items.indexWhere((prod) => prod.id == id);
     var existingProduct = _items[existingProductIndex];
     _items.removeAt(existingProductIndex);
