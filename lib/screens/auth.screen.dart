@@ -240,20 +240,16 @@ class _AuthCardState extends State<AuthCard> with SingleTickerProviderStateMixin
         borderRadius: BorderRadius.circular(10.0),
       ),
       elevation: 8.0,
-      child: AnimatedBuilder(
-        animation: _heightAnimation,
-        builder: (ctx, child) {
-          return Container(
-          // height: _authMode == AuthMode.Signup ? 340 : 280,
-            height: _heightAnimation.value.height,
-            constraints:
-                BoxConstraints(minHeight: _heightAnimation.value.height),
-            width: deviceSize.width * 0.75,
-            padding: EdgeInsets.all(16.0),
-            child: child
-          );
-        },
-        child: Form(
+      child: AnimatedContainer(
+          // height: _heightAnimation.value.height,
+          duration: Duration(milliseconds: 300),
+          curve: Curves.easeIn,
+          height: _authMode == AuthMode.Signup ? 340 : 280,
+          constraints:
+              BoxConstraints(minHeight: _authMode == AuthMode.Signup ? 340 : 280),
+          width: deviceSize.width * 0.75,
+          padding: EdgeInsets.all(16.0),
+          child: Form(
           key: _formKey,
           child: SingleChildScrollView(
             child: Column(
