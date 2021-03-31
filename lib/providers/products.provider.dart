@@ -283,8 +283,10 @@ class ProductsProvider with ChangeNotifier {
   //   notifyListeners();
   // }
 
-  Future<void> fetchAndSetProducts() async {
-    var url = Uri.parse('https://flutter-shop-app-d8fdf-default-rtdb.firebaseio.com/products.json?auth=$authToken');
+  Future<void> fetchAndSetProducts([bool filterByUser = false]) async {
+    var filterString = filterByUser ? 'orderBy="creatorId"&equalTo="$userId"' : "";
+    var url = Uri.parse('https://flutter-shop-app-d8fdf-default-rtdb.firebaseio.com/products.json?auth=$authToken&$filterString');
+    
     try {
       final response = await http.get(url);
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -331,6 +333,7 @@ class ProductsProvider with ChangeNotifier {
           'description': product.description,
           'imageUrl': product.imageUrl,
           'price': product.price,
+          'creatorId': userId,
         }),
       );
       final newProduct = Product(
